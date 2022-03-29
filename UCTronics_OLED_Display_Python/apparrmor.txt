@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile uctronics_oled_display_python flags=(attach_disconnected,mediate_deleted) {
+profile yahboom_rgb_fan_display_python flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   
   capability,

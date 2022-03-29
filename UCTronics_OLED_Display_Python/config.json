@@ -1,8 +1,8 @@
 {
-    "name": "UCTRONICS OLED Display (Python)",
-    "version": "2021.10.25.003",
-    "slug": "uctronics_oled_display_python",
-    "description": "This addon lets you display to your OLED provided in the UCTRONICS Pi Rack 4 with the ssd1306 OLED.",
+    "name": "Yahboom RGB Cool Hat OLED Display (Python)",
+    "version": "2022.03.29.001",
+    "slug": "yahboom_rgb_fan_display_python",
+    "description": "This addon lets you display to your OLED and RGB Fan HAT from Yahboom.",
     "arch": [
         "armhf",
         "armv7",
@@ -24,7 +24,7 @@
     "gpio": true,
     "stage": "experimental",
     "full_access": true,
-    "url": "https://github.com/garethcheyne/HomeAssistant/tree/main/UCTronics_OLED_Display_Python",
+    "url": "https://github.com/rojoricardo/HomeAssistant/tree/main/UCTronics_OLED_Display_Python",
     "boot": "manual",
     "options": {
         "Show_Splash_Screen": true,

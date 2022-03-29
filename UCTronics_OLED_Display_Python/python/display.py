@@ -13,6 +13,7 @@ import time
 import sys, getopt
 import subprocess
 import json
+import smbus
 
 from board import SCL, SDA
 import busio
@@ -29,7 +30,13 @@ SHOW_MEMORY = True
 SHOW_STORAGE = True
 DURATION = 5
 
+bus = smbus.SMBus(1)
 
+addr = 0x0d
+fan_reg = 0x08
+state = 0
+temp = 0
+level_temp = 0
 
 # Create the I2C interface.
 i2c = busio.I2C(SCL, SDA)
@@ -76,6 +83,13 @@ def start():
         if (SHOW_MEMORY) : show_memory()
         if (SHOW_NETWORK) : show_network()
         if (SHOW_STORAGE) : show_storage()
+        if state == 0:
+            bus.write_byte_data(addr, fan_reg, 0x00)
+            time.sleep(2)
+        elif state == 1:
+            bus.write_byte_data(addr, fan_reg, 0x01)
+            time.sleep(2)
+        state = (state + 1) % 2
         
 
 def show_storage():
@@ -172,7 +186,7 @@ def show_network():
     image.paste(icon,(-2,3))
 
     draw.text((29, 0), "HOST " + hostname, font=small, fill=255)
-    draw.text((29, 11), "IP4 " + ipv4, font=small, fill=255)    
+    draw.text((29, 11), "IP4 " + ipv4, font=small, fill=226)    
     draw.text((29, 21), "MAC " + mac.upper(), font=small, fill=255)    
 
     #image.save(r"./img/examples/network.png")
