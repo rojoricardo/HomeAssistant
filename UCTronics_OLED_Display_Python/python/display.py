@@ -83,14 +83,7 @@ def start():
         if (SHOW_MEMORY) : show_memory()
         if (SHOW_NETWORK) : show_network()
         if (SHOW_STORAGE) : show_storage()
-        if state == 0:
-            bus.write_byte_data(addr, fan_reg, 0x00)
-            time.sleep(2)
-        elif state == 1:
-            bus.write_byte_data(addr, fan_reg, 0x01)
-            time.sleep(2)
-        state = (state + 1) % 2
-        
+        bus.write_byte_data(addr, fan_reg, 0x01)        
 
 def show_storage():
     storage =  shell_cmd('df -h | awk \'$NF=="/"{printf "%d,%d,%s", $3,$2,$5}\'')
