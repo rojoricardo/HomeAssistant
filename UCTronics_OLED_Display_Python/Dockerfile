@@ -39,7 +39,7 @@ RUN \
     python3-pip \
     python3-rpi.gpio \
     \
-    && apt-get update && apt-get install -y libjpeg-dev libfreetype6-dev libopenjp2-7 \
+    && apt-get update && apt-get install -y libjpeg-dev libfreetype6-dev libopenjp2-7 python-smbus i2c-tools \
     \
     && curl -L -f -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-armhf.tar.gz" \
     | tar zxvf - -C / \
