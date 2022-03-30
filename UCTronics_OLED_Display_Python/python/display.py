@@ -9,6 +9,7 @@
 # not support PIL/pillow (python imaging library)!
 import math
 from os import stat
+import os
 import time
 import sys, getopt
 import subprocess
@@ -42,13 +43,15 @@ fan_reg = 0x08
 fan_state = 0
 temp = 0
 level_temp = 0
+rgb_off_reg = 0x07
+Max_LED = 3
 
 # Create the I2C interface.
 i2c = busio.I2C(SCL, SDA)
 
 # Create the SSD1306 OLED class.
 # The first two parameters are the pixel width and pixel height.  Change these to the right size for your display!
-disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c, rotate = 1)
+disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
 
 # Clear display.
 disp.fill(0)
@@ -88,9 +91,22 @@ def start():
         if (SHOW_MEMORY) : show_memory()
         if (SHOW_NETWORK) : show_network()
         if (SHOW_STORAGE) : show_storage()
-        if (FAN_ENABLED) : fan_operation()
+        if (FAN_ENABLED) : fan_rgb_operation()
 
-def fan_operation():
+def setRGB(num, r, g, b):
+    if num >= Max_LED:
+        bus.write_byte_data(addr, 0x00, 0xff)
+        bus.write_byte_data(addr, 0x01, r&0xff)
+        bus.write_byte_data(addr, 0x02, g&0xff)
+        bus.write_byte_data(addr, 0x03, b&0xff)
+    elif num >= 0:
+        bus.write_byte_data(addr, 0x00, num&0xff)
+        bus.write_byte_data(addr, 0x01, r&0xff)
+        bus.write_byte_data(addr, 0x02, g&0xff)
+        bus.write_byte_data(addr, 0x03, b&0xff)
+
+def fan_rgb_operation():
+    """
     # global fan_state
     fan_state = 0
     for fan_state in range(5):
@@ -101,6 +117,60 @@ def fan_operation():
             bus.write_byte_data(addr, fan_reg, 0x01)
             time.sleep(2)
         fan_state += 1
+        
+    cmd = os.popen('vcgencmd measure_temp').readline()
+    CPU_TEMP = cmd.replace("temp=","").replace("'C\n","")
+    #print(CPU_TEMP)
+    temp = float(CPU_TEMP)
+    """
+    temp = float(shell_cmd("cat /sys/class/thermal/thermal_zone0/temp")) / 1000.00
+    if abs(temp - level_temp) >= 1:
+        if temp <= 40:
+            level_temp = 40
+            setRGB(Max_LED, 0x1e, 0xb6, 0xee)
+            bus.write_byte_data(addr, fan_reg, 0x00)
+            #print("apagado")
+            #setRGB(0,0x10,0xb0,0xee)
+            #setRGB(1,0x17,0xb3,0xe7)
+            #setRGB(2,0x1e,0xb6,0xe0)
+        elif temp <= 41:
+            level_temp = 41
+            setRGB(Max_LED, 0x0f, 0x60, 0xf7)
+            bus.write_byte_data(addr, fan_reg, 0x00)
+        elif temp <= 42:
+            level_temp = 42
+            setRGB(Max_LED, 0x00, 0x0a, 0xff)
+            bus.write_byte_data(addr, fan_reg, 0x00)
+        elif temp <= 43:
+            level_temp = 43
+            setRGB(Max_LED, 0x79, 0x00, 0xf4)
+            bus.write_byte_data(addr, fan_reg, 0x05)
+        elif temp <= 44:
+            level_temp = 44
+            setRGB(Max_LED, 0x97, 0x32, 0xc1)
+            bus.write_byte_data(addr, fan_reg, 0x05)
+        elif temp <= 45:
+            level_temp = 45
+            setRGB(Max_LED, 0xf2, 0xc7, 0x27)
+            bus.write_byte_data(addr, fan_reg, 0x07)
+        elif temp <= 46:
+            level_temp = 46
+            setRGB(Max_LED, 0xf9, 0x63, 0x14)
+            bus.write_byte_data(addr, fan_reg, 0x07)
+        elif temp <= 47:
+            level_temp = 47
+            setRGB(Max_LED, 0xff, 0x8c, 0x00)
+            bus.write_byte_data(addr, fan_reg, 0x09)
+        elif temp <= 48:
+            level_temp = 48
+            setRGB(Max_LED, 0xff, 0x00, 0x00)
+            bus.write_byte_data(addr, fan_reg, 0x09)
+        elif temp >= 49:
+            level_temp = 49
+            setRGB(Max_LED, 0xff, 0xff, 0xff)
+            bus.write_byte_data(addr, fan_reg, 0x01)
+
+
 
 def show_storage():
     storage =  shell_cmd('df -h | awk \'$NF=="/"{printf "%d,%d,%s", $3,$2,$5}\'')
@@ -151,7 +221,7 @@ def show_cpu_temp():
     #host_info = hassos_get_info('host/info')
 
     cpu = shell_cmd("top -bn1 | grep load | awk '{printf \"%.2f\", $(NF-2)}'")
-    temp =  float(shell_cmd("cat /sys/class/thermal/thermal_zone0/temp")) / 1000.00
+    temp = float(shell_cmd("cat /sys/class/thermal/thermal_zone0/temp")) / 1000.00
     uptime = shell_cmd("uptime | grep -ohe 'up .*' | sed 's/,//g' | awk '{ print $2" "$3 }'")
 
     # Check temapture unit and convert if required.
