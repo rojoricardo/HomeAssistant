@@ -91,9 +91,9 @@ def start():
         if (FAN_ENABLED) : fan_operation()
 
 def fan_operation():
-    global fan_state
+    # fan_state
     fan_state = 0
-    for fan_state in range(1):
+    for fan_state in range(3):
         if fan_state == 0:
             bus.write_byte_data(addr, fan_reg, 0x00)
             time.sleep(2)
