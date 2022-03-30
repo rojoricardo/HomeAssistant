@@ -29,6 +29,7 @@ SHOW_NETWORK = False
 SHOW_MEMORY = True
 SHOW_STORAGE = True
 DURATION = 5
+FAN_ENABLED = True
 FAN_TEMP_HIGH = 55
 FAN_TEMP_MEDHIGH = 50
 FAN_TEMP_MEDLOW = 45
@@ -87,15 +88,16 @@ def start():
         if (SHOW_MEMORY) : show_memory()
         if (SHOW_NETWORK) : show_network()
         if (SHOW_STORAGE) : show_storage()
+        fan_operation()
 
 def fan_operation():
     while True:
         if state == 0:
             bus.write_byte_data(addr, fan_reg, 0x00)
-            time.sleep(DURATION)
+            time.sleep(2)
         elif state == 1:
             bus.write_byte_data(addr, fan_reg, 0x01)
-            time.sleep(DURATION)
+            time.sleep(2)
 
         state = (state + 1) %2
 
@@ -264,7 +266,7 @@ def shell_cmd(cmd):
 def get_options():
     f = open("/data/options.json", "r")
     options = json.loads(f.read())
-    global TEMP_UNIT, SHOW_SPLASH, SHOW_CPU, SHOW_MEMORY, SHOW_STORAGE, SHOW_NETWORK, DURATION, FAN_TEMP_HIGH, FAN_TEMP_MEDHIGH, FAN_TEMP_MEDLOW, FAN_TEMP_LOW
+    global TEMP_UNIT, SHOW_SPLASH, SHOW_CPU, SHOW_MEMORY, SHOW_STORAGE, SHOW_NETWORK, DURATION, FAN_ENABLED, FAN_TEMP_HIGH, FAN_TEMP_MEDHIGH, FAN_TEMP_MEDLOW, FAN_TEMP_LOW
     TEMP_UNIT = options['Temperature_Unit']
     SHOW_SPLASH = options['Show_Splash_Screen']
     SHOW_CPU = options['Show_CPU_Info']
@@ -272,6 +274,7 @@ def get_options():
     SHOW_STORAGE = options['Show_Storage_Info']
     SHOW_NETWORK = options['Show_Network_Info']
     DURATION =  options['Slide_Duration']
+    FAN_ENABLED = options['Enable_Fan']
     FAN_TEMP_HIGH = options['Temperature_High']
     FAN_TEMP_MEDHIGH = options['Temperature_Medium_High']
     FAN_TEMP_MEDLOW = options['Temperature_Medium_Low']
@@ -285,5 +288,4 @@ def clear_display():
 if __name__ == "__main__":
     get_options()
     start()
-    fan_operation()
 
