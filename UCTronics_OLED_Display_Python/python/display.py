@@ -25,10 +25,14 @@ import adafruit_ssd1306
 TEMP_UNIT = "C"
 SHOW_SPLASH = True
 SHOW_CPU = True
-SHOW_NETWORK = True
+SHOW_NETWORK = False
 SHOW_MEMORY = True
 SHOW_STORAGE = True
 DURATION = 5
+FAN_TEMP_HIGH = 55
+FAN_TEMP_MEDHIGH = 50
+FAN_TEMP_MEDLOW = 45
+FAN_TEMP_LOW = 40
 
 bus = smbus.SMBus(1)
 
@@ -83,7 +87,17 @@ def start():
         if (SHOW_MEMORY) : show_memory()
         if (SHOW_NETWORK) : show_network()
         if (SHOW_STORAGE) : show_storage()
-        bus.write_byte_data(addr, fan_reg, 0x01)        
+
+def fan_operation():
+    while True:
+        if state == 0:
+            bus.write_byte_data(addr, fan_reg, 0x00)
+            time.sleep(DURATION)
+        elif state == 1:
+            bus.write_byte_data(addr, fan_reg, 0x01)
+            time.sleep(DURATION)
+
+        state = (state + 1) %2
 
 def show_storage():
     storage =  shell_cmd('df -h | awk \'$NF=="/"{printf "%d,%d,%s", $3,$2,$5}\'')
@@ -169,7 +183,7 @@ def show_network():
     network_info = hassos_get_info('network/info')
     ipv4 = network_info['data']['interfaces'][0]['ipv4']['address'][0].split("/")[0]
 
-    mac = shell_cmd("cat /sys/class/net/eth0/address")
+    mac = shell_cmd("cat /sys/class/net/wlan0/address")
 
     # Clear Canvas
     draw.rectangle((0,0,128,32), outline=0, fill=0)
@@ -250,7 +264,7 @@ def shell_cmd(cmd):
 def get_options():
     f = open("/data/options.json", "r")
     options = json.loads(f.read())
-    global TEMP_UNIT, SHOW_SPLASH, SHOW_CPU, SHOW_MEMORY, SHOW_STORAGE, SHOW_NETWORK, DURATION
+    global TEMP_UNIT, SHOW_SPLASH, SHOW_CPU, SHOW_MEMORY, SHOW_STORAGE, SHOW_NETWORK, DURATION, FAN_TEMP_HIGH, FAN_TEMP_MEDHIGH, FAN_TEMP_MEDLOW, FAN_TEMP_LOW
     TEMP_UNIT = options['Temperature_Unit']
     SHOW_SPLASH = options['Show_Splash_Screen']
     SHOW_CPU = options['Show_CPU_Info']
@@ -258,6 +272,11 @@ def get_options():
     SHOW_STORAGE = options['Show_Storage_Info']
     SHOW_NETWORK = options['Show_Network_Info']
     DURATION =  options['Slide_Duration']
+    FAN_TEMP_HIGH = options['Temperature_High']
+    FAN_TEMP_MEDHIGH = options['Temperature_Medium_High']
+    FAN_TEMP_MEDLOW = options['Temperature_Medium_Low']
+    FAN_TEMP_LOW = options['Temperature_Low']
+
 
 def clear_display():
     disp.fill(0)
@@ -266,4 +285,5 @@ def clear_display():
 if __name__ == "__main__":
     get_options()
     start()
+    fan_operation()
 
