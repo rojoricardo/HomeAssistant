@@ -39,7 +39,7 @@ bus = smbus.SMBus(1)
 
 addr = 0x0d
 fan_reg = 0x08
-state = 0
+fan_state = 0
 temp = 0
 level_temp = 0
 
@@ -88,18 +88,19 @@ def start():
         if (SHOW_MEMORY) : show_memory()
         if (SHOW_NETWORK) : show_network()
         if (SHOW_STORAGE) : show_storage()
-        fan_operation()
+        if (FAN_ENABLED) : fan_operation()
 
 def fan_operation():
-    while True:
-        if state == 0:
+    global fan_state
+    fan_state = 0
+    for fan_state in range(1):
+        if fan_state == 0:
             bus.write_byte_data(addr, fan_reg, 0x00)
             time.sleep(2)
-        elif state == 1:
+        elif fan_state == 1:
             bus.write_byte_data(addr, fan_reg, 0x01)
             time.sleep(2)
-
-        state = (state + 1) %2
+        fan_state += 1
 
 def show_storage():
     storage =  shell_cmd('df -h | awk \'$NF=="/"{printf "%d,%d,%s", $3,$2,$5}\'')
