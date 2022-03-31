@@ -52,7 +52,7 @@
         "Slide_Duration": "int",
         "Stop_Auto_Run": "bool",
         "Enable_Fan": "bool",
-        "Temperature_Full": "int(60,100)",
+        "Temperature_Full": "list(60,100)",
         "Temperature_High": "int(55,59)",
         "Temperature_Medium_High": "int(50,54)",
         "Temperature_Medium_Low": "int(45,49)",
