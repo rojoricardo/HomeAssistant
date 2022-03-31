@@ -124,6 +124,7 @@ def fan_rgb_operation():
     temp = float(CPU_TEMP)
     """
     temp = float(shell_cmd("cat /sys/class/thermal/thermal_zone0/temp")) / 1000.00
+    global level_temp = 0
     if abs(temp - level_temp) >= 1:
         if temp <= 40:
             level_temp = 40
