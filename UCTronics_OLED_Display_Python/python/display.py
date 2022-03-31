@@ -31,6 +31,7 @@ SHOW_MEMORY = True
 SHOW_STORAGE = True
 DURATION = 5
 FAN_ENABLED = True
+FAN_TEMP_FULL = 60
 FAN_TEMP_HIGH = 55
 FAN_TEMP_MEDHIGH = 50
 FAN_TEMP_MEDLOW = 45
@@ -87,9 +88,13 @@ img_cpu_64 = Image.open(r"./img/cpu-64-bit.png")
 def start():
     while True:        
         if (SHOW_SPLASH) : show_splash()
+        if (FAN_ENABLED) : fan_rgb_operation()
         if (SHOW_CPU) : show_cpu_temp()
+        if (FAN_ENABLED) : fan_rgb_operation()
         if (SHOW_MEMORY) : show_memory()
+        if (FAN_ENABLED) : fan_rgb_operation()
         if (SHOW_NETWORK) : show_network()
+        if (FAN_ENABLED) : fan_rgb_operation()
         if (SHOW_STORAGE) : show_storage()
         if (FAN_ENABLED) : fan_rgb_operation()
 
@@ -134,40 +139,28 @@ def fan_rgb_operation():
             #setRGB(0,0x10,0xb0,0xee)
             #setRGB(1,0x17,0xb3,0xe7)
             #setRGB(2,0x1e,0xb6,0xe0)
-        elif temp <= 41:
-            level_temp = 41
+        elif temp <= FAN_TEMP_LOW:
+            level_temp = FAN_TEMP_LOW
             setRGB(Max_LED, 0x0f, 0x60, 0xf7)
             bus.write_byte_data(addr, fan_reg, 0x00)
-        elif temp <= 42:
-            level_temp = 42
-            setRGB(Max_LED, 0x00, 0x0a, 0xff)
-            bus.write_byte_data(addr, fan_reg, 0x00)
-        elif temp <= 43:
-            level_temp = 43
-            setRGB(Max_LED, 0x79, 0x00, 0xf4)
-            bus.write_byte_data(addr, fan_reg, 0x05)
-        elif temp <= 44:
-            level_temp = 44
+
+        elif temp <= FAN_TEMP_MEDLOW:
+            level_temp = FAN_TEMP_MEDLOW
             setRGB(Max_LED, 0x97, 0x32, 0xc1)
             bus.write_byte_data(addr, fan_reg, 0x05)
-        elif temp <= 45:
-            level_temp = 45
-            setRGB(Max_LED, 0xf2, 0xc7, 0x27)
-            bus.write_byte_data(addr, fan_reg, 0x07)
-        elif temp <= 46:
+
+        elif temp <= FAN_TEMP_MEDHIGH:
             level_temp = 46
             setRGB(Max_LED, 0xf9, 0x63, 0x14)
             bus.write_byte_data(addr, fan_reg, 0x07)
-        elif temp <= 47:
-            level_temp = 47
+
+        elif temp <= FAN_TEMP_HIGH:
+            level_temp = FAN_TEMP_HIGH
             setRGB(Max_LED, 0xff, 0x8c, 0x00)
             bus.write_byte_data(addr, fan_reg, 0x09)
-        elif temp <= 48:
-            level_temp = 48
-            setRGB(Max_LED, 0xff, 0x00, 0x00)
-            bus.write_byte_data(addr, fan_reg, 0x09)
-        elif temp >= 49:
-            level_temp = 49
+
+        elif temp >= FAN_TEMP_FULL:
+            level_temp = FAN_TEMP_FULL
             setRGB(Max_LED, 0xff, 0xff, 0xff)
             bus.write_byte_data(addr, fan_reg, 0x01)
 
@@ -338,7 +331,7 @@ def shell_cmd(cmd):
 def get_options():
     f = open("/data/options.json", "r")
     options = json.loads(f.read())
-    global TEMP_UNIT, SHOW_SPLASH, SHOW_CPU, SHOW_MEMORY, SHOW_STORAGE, SHOW_NETWORK, DURATION, FAN_ENABLED, FAN_TEMP_HIGH, FAN_TEMP_MEDHIGH, FAN_TEMP_MEDLOW, FAN_TEMP_LOW
+    global TEMP_UNIT, SHOW_SPLASH, SHOW_CPU, SHOW_MEMORY, SHOW_STORAGE, SHOW_NETWORK, DURATION, FAN_ENABLED, FAN_TEMP_FULL, FAN_TEMP_HIGH, FAN_TEMP_MEDHIGH, FAN_TEMP_MEDLOW, FAN_TEMP_LOW
     TEMP_UNIT = options['Temperature_Unit']
     SHOW_SPLASH = options['Show_Splash_Screen']
     SHOW_CPU = options['Show_CPU_Info']
