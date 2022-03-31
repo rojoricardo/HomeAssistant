@@ -80,9 +80,9 @@ smaller = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 
 
 img_network = Image.open(r"./img/ip-network.png") 
 img_mem = Image.open(r"./img/database.png") 
-img_disk = Image.open(r"./img/database-outline.png") 
+img_disk = Image.open(r"./img/sd_card.png") 
 img_ha_logo = m = Image.open(r"./img/home-assistant-logo.png") 
-img_cpu_64 = Image.open(r"./img/cpu-64-bit.png") 
+img_cpu_64 = Image.open(r"./img/cpu_arm.png") 
 
 
 def start():
@@ -119,10 +119,6 @@ def fan_rgb_operation():
             level_temp = FAN_TEMP_LOW
             setRGB(Max_LED, 0x1e, 0xb6, 0xee)
             bus.write_byte_data(addr, fan_reg, 0x00)
-            #print("apagado")
-            #setRGB(0,0x10,0xb0,0xee)
-            #setRGB(1,0x17,0xb3,0xe7)
-            #setRGB(2,0x1e,0xb6,0xe0)
 
         elif temp <= FAN_TEMP_MEDLOW:
             level_temp = FAN_TEMP_MEDLOW
@@ -154,12 +150,12 @@ def show_storage():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_disk.resize([26,26])  
-    image.paste(icon,(-2,3))
+    icon = img_disk.resize([32,32])  
+    image.paste(icon,(0,0))
 
-    draw.text((29, 0), "USED: " + storage[0] + ' GB \n', font=small, fill=255)
-    draw.text((29, 11), "TOTAL: " + storage[1] + ' GB \n', font=small, fill=255)
-    draw.text((29, 21), "UTILISED: " + storage[2] + ' \n', font=small, fill=255) 
+    draw.text((33, 0), "USED: " + storage[0] + ' GB \n', font=small, fill=255)
+    draw.text((33, 11), "TOTAL: " + storage[1] + ' GB \n', font=small, fill=255)
+    draw.text((33, 21), "UTILISED: " + storage[2] + ' \n', font=small, fill=255) 
 
     #image.save(r"./img/examples/storage.png")    
 
@@ -176,12 +172,12 @@ def show_memory():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_mem.resize([26,26])  
-    image.paste(icon,(-2,3))
+    icon = img_mem.resize([32,32])  
+    image.paste(icon,(0,0))
 
-    draw.text((29, 0), "USED: " + mem[0] + ' GB \n', font=small, fill=255)
-    draw.text((29, 11), "TOTAL: " + mem[1] + ' GB \n', font=small, fill=255)
-    draw.text((29, 21), "UTILISED: " + mem[2] + ' \n', font=small, fill=255)  
+    draw.text((33, 0), "USED: " + mem[0] + ' GB \n', font=small, fill=255)
+    draw.text((33, 11), "TOTAL: " + mem[1] + ' GB \n', font=small, fill=255)
+    draw.text((33, 21), "UTILISED: " + mem[2] + ' \n', font=small, fill=255)  
 
     #image.save(r"./img/examples/memory.png")   
 
@@ -209,12 +205,12 @@ def show_cpu_temp():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_cpu_64.resize([26,26])  
-    image.paste(icon,(-2,3))
+    icon = img_cpu_64.resize([32,32])  
+    image.paste(icon,(0,0))
 
-    draw.text((29, 0), 'TEMP: ' + temp, font=small, fill=255)
-    draw.text((29, 11), 'LOAD: '+ cpu + "% ", font=small, fill=255)  
-    draw.text((29, 21), uptime.upper(), font=small, fill=255)
+    draw.text((33, 0), 'TEMP: ' + temp, font=small, fill=255)
+    draw.text((33, 11), 'LOAD: '+ cpu + "% ", font=small, fill=255)  
+    draw.text((33, 21), uptime.upper(), font=small, fill=255)
 
     #image.save(r"./img/examples/cpu.png")
     
@@ -236,12 +232,12 @@ def show_network():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_network.resize([26,26])  
-    image.paste(icon,(-2,3))
+    icon = img_network.resize([32,32])  
+    image.paste(icon,(0,0))
 
-    draw.text((29, 0), "HOST " + hostname, font=small, fill=255)
-    draw.text((29, 11), "IP4 " + ipv4, font=small, fill=226)    
-    draw.text((29, 21), "MAC " + mac.upper(), font=small, fill=255)    
+    draw.text((33, 0), "HOST " + hostname, font=small, fill=255)
+    draw.text((33, 11), "IP4 " + ipv4, font=small, fill=226)    
+    draw.text((33, 21), "MAC " + mac.upper(), font=small, fill=255)    
 
     #image.save(r"./img/examples/network.png")
 
@@ -274,11 +270,11 @@ def show_splash():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
     # Get HA Logo and Resize
-    logo = img_ha_logo.resize([26,26])
+    logo = img_ha_logo.resize([32,32])
     logo = ImageOps.invert(logo)  
     
     # Merge HA Logo with Canvas.
-    image.paste(logo,(-2,3))
+    image.paste(logo,(0,0))
 
     draw.line([(34, 16),(123,16)], fill=255, width=1)
 
