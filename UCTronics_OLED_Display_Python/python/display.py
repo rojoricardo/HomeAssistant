@@ -79,7 +79,7 @@ smaller = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 
 
 
 img_network = Image.open(r"./img/ip-network.png") 
-img_mem = Image.open(r"./img/database.png") 
+img_mem = Image.open(r"./img/ram.png") 
 img_disk = Image.open(r"./img/sd_card.png") 
 img_ha_logo = m = Image.open(r"./img/home-assistant-logo.png") 
 img_cpu_64 = Image.open(r"./img/cpu_arm.png") 
