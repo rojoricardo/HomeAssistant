@@ -131,18 +131,14 @@ def fan_rgb_operation():
     temp = float(shell_cmd("cat /sys/class/thermal/thermal_zone0/temp")) / 1000.00
     global level_temp
     if abs(temp - level_temp) >= 1:
-        if temp <= 40:
-            level_temp = 40
+        if temp <= FAN_TEMP_LOW:
+            level_temp = FAN_TEMP_LOW
             setRGB(Max_LED, 0x1e, 0xb6, 0xee)
             bus.write_byte_data(addr, fan_reg, 0x00)
             #print("apagado")
             #setRGB(0,0x10,0xb0,0xee)
             #setRGB(1,0x17,0xb3,0xe7)
             #setRGB(2,0x1e,0xb6,0xe0)
-        elif temp <= FAN_TEMP_LOW:
-            level_temp = FAN_TEMP_LOW
-            setRGB(Max_LED, 0x0f, 0x60, 0xf7)
-            bus.write_byte_data(addr, fan_reg, 0x00)
 
         elif temp <= FAN_TEMP_MEDLOW:
             level_temp = FAN_TEMP_MEDLOW

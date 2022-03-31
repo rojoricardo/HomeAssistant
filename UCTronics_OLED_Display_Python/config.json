@@ -1,6 +1,6 @@
 {
     "name": "Yahboom RGB Cool Hat OLED Display (Python)",
-    "version": "2022.03.29.013",
+    "version": "2022.03.29.014",
     "slug": "yahboom_rgb_fan_display_python",
     "description": "This addon lets you display to your OLED and RGB Fan HAT from Yahboom.",
     "arch": [
