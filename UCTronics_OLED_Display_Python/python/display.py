@@ -111,23 +111,7 @@ def setRGB(num, r, g, b):
         bus.write_byte_data(addr, 0x03, b&0xff)
 
 def fan_rgb_operation():
-    """
-    # global fan_state
-    fan_state = 0
-    for fan_state in range(5):
-        if fan_state % 2 == 0:
-            bus.write_byte_data(addr, fan_reg, 0x00)
-            time.sleep(2)
-        elif fan_state % 2 == 1:
-            bus.write_byte_data(addr, fan_reg, 0x01)
-            time.sleep(2)
-        fan_state += 1
-        
-    cmd = os.popen('vcgencmd measure_temp').readline()
-    CPU_TEMP = cmd.replace("temp=","").replace("'C\n","")
-    #print(CPU_TEMP)
-    temp = float(CPU_TEMP)
-    """
+
     temp = float(shell_cmd("cat /sys/class/thermal/thermal_zone0/temp")) / 1000.00
     global level_temp
     if abs(temp - level_temp) >= 1:
@@ -146,7 +130,7 @@ def fan_rgb_operation():
             bus.write_byte_data(addr, fan_reg, 0x05)
 
         elif temp <= FAN_TEMP_MEDHIGH:
-            level_temp = 46
+            level_temp = FAN_TEMP_MEDHIGH
             setRGB(Max_LED, 0xf9, 0x63, 0x14)
             bus.write_byte_data(addr, fan_reg, 0x07)
 
