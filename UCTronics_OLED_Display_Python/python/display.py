@@ -150,7 +150,7 @@ def show_storage():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_disk.resize([32,32])  
+    icon = img_disk
     image.paste(icon,(0,0))
 
     draw.text((33, 0), "USED: " + storage[0] + ' GB \n', font=small, fill=255)
@@ -172,7 +172,7 @@ def show_memory():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_mem.resize([32,32])  
+    icon = img_mem
     image.paste(icon,(0,0))
 
     draw.text((33, 0), "USED: " + mem[0] + ' GB \n', font=small, fill=255)
