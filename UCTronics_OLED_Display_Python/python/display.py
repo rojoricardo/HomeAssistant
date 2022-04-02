@@ -271,7 +271,7 @@ def show_splash():
 
     # Get HA Logo and Resize
     logo = img_ha_logo.resize([32,32])
-    logo = ImageOps.invert(logo)  
+    # logo = ImageOps.invert(logo)  
     
     # Merge HA Logo with Canvas.
     image.paste(logo,(0,0))
