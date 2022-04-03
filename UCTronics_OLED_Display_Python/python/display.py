@@ -205,7 +205,7 @@ def show_cpu_temp():
     draw.rectangle((0,0,128,32), outline=0, fill=0)
 
     # Resize and merge icon to Canvas
-    icon = img_cpu_64.resize([32,32])  
+    icon = img_cpu_64#.resize([32,32])  
     image.paste(icon,(0,0))
 
     draw.text((33, 0), 'TEMP: ' + temp, font=small, fill=255)
@@ -270,7 +270,7 @@ def show_splash():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
     # Get HA Logo and Resize
-    logo = img_ha_logo.resize([32,32])
+    logo = img_ha_logo#.resize([32,32])
     # logo = ImageOps.invert(logo)  
     
     # Merge HA Logo with Canvas.
