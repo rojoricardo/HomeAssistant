@@ -1,13 +1,15 @@
-# UCTRONICS OLED Display - Python Version
+# YAHBOOM RGB COOLING HAT OLED Display - Python Version
 
-Enables the the OLED display for UCTRONICS Pi 4 Rack Module.
+Enables Yahboom RGB Cooling HAT and OLED display Pi 4 to work with Home Assistant.
 
 ### NB, This addon will take some time to initially load as it has to build some python libraries. 
 
+This add-on is based on the project of Gareth Cheyne, https://github.com/garethcheyne/HomeAssistant which allows Home Assistant to use an OLED Display, I just added and addapted code to that project, from the developers of Yahboom RGB Cooling HAT for the Raspberry Pi, in orther to make it work and be able to use the fan and the RGB leds.
 
-Special thanks to [DC Walter](https://github.com/dcwalter) for his assistance on this project.
+Gareth Cheyne, wishes to give special thanks to [DC Walter](https://github.com/dcwalter) for his assistance on this project.
 
 This addon includes a splash screen that will show you the current version of the Core OS, and HA, and will be presented with an astricx if either require an upgrade. You are also able to set the duration of the slide rotation, and what slides you wish to present.
+Also it'll give five options to set values for when the fan will turn on, at higher temperature, higher speed, the leds change depending on the temperature of the device too, right now they are at a set color, in the future planning on makeing them available through Home Assistant.
 
 
 ## First Step  - Enable i2c
@@ -21,7 +23,7 @@ This addon from Adam Outler, [GitHub adamoutler](https://github.com/adamoutler/H
 ## Second Step - Enable this Addon.
 1. Start the Addon
 2. Check the "Log" and see if there are any errors.
-3. Your OLED should be displaying.
+3. Your OLED should be displaying and fan and RGB leds reflecting the temperature
 
 ## Some Teaser Screenshots.
 ### Splash Screen
