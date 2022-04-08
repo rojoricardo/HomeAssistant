@@ -27,12 +27,12 @@ This addon from Adam Outler, [GitHub adamoutler](https://github.com/adamoutler/H
 
 ## Some Teaser Screenshots.
 ### Splash Screen
-![Splash Screen](https://github.com/garethcheyne/HomeAssistant/raw/main/UCTronics_OLED_Display_Python/python/img/examples/splash.png?raw=true)
+![Splash Screen](https://github.com/garethcheyne/HomeAssistant/raw/main/Yahboom_RGB_Cooling_Hat_Python/python/img/examples/splash.png?raw=true)
 ### CPU Stats
-![CPU Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/UCTronics_OLED_Display_Python/python/img/examples/cpu.png?raw=true)
+![CPU Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/Yahboom_RGB_Cooling_Hat_Python/python/img/examples/cpu.png?raw=true)
 ### RAM Stats
-![RAM Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/UCTronics_OLED_Display_Python/python/img/examples/memory.png?raw=true)
+![RAM Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/Yahboom_RGB_Cooling_Hat_Python/python/img/examples/memory.png?raw=true)
 ### Storage Stats
-![Storage Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/UCTronics_OLED_Display_Python/python/img/examples/storage.png?raw=true)
+![Storage Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/Yahboom_RGB_Cooling_Hat_Python/python/img/examples/storage.png?raw=true)
 ### Network Stats
-![Network Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/UCTronics_OLED_Display_Python/python/img/examples/network.png?raw=true)
+![Network Stats](https://github.com/garethcheyne/HomeAssistant/raw/main/Yahboom_RGB_Cooling_Hat_Python/python/img/examples/network.png?raw=true)
