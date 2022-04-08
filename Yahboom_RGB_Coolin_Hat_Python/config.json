@@ -53,7 +53,7 @@
         "Stop_Auto_Run": "bool",
         "Enable_Fan": "bool",
         "Temperature_Full": "list(61|62|63|64|65|66)",
-        "Temperature_High": "[55|56|57|58|59|60]",
+        "Temperature_High": "int(55|56|57|58|59|60)",
         "Temperature_Medium_High": "int(50,54)",
         "Temperature_Medium_Low": "int(45,49)",
         "Temperature_Low": "int(40,44)"
