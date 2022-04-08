@@ -5,7 +5,7 @@ set -e
 CONFIG_PATH=/data/options.json
 
 DISABLE_AUTO_START="$(bashio::config 'Stop_Auto_Run')"
-bashio::log.info "Starting UCTronics OLED App..."
+bashio::log.info "Starting Yahboom RGB Cooling Hat App..."
 bashio::log.info "Disable Auto Start = ${DISABLE_AUTO_START}"
 
 
